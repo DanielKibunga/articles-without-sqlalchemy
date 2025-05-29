@@ -1,11 +1,26 @@
-from lib.db.connection import CONN, CURSOR
+# scripts/setup_db.py
+
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from lib.db.connection import get_connection
 
 def setup_database():
-    with open("lib/db/schema.sql") as f:
-        sql = f.read()
-        CURSOR.executescript(sql)
-        CONN.commit()
-        print("✅ Database setup complete!")
+    conn = get_connection()
+    cursor = conn.cursor()
+
+   
+    with open('lib/db/schema.sql') as f:
+        cursor.executescript(f.read())
+
+    conn.commit()
+    conn.close()
+    print("Guess what, it's working!")
 
 if __name__ == "__main__":
     setup_database()
+
+  
+    from lib.db.seed import seed_data
+    seed_data()

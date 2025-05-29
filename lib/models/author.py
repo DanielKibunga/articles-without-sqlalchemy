@@ -1,4 +1,3 @@
-# lib/models/author.py
 from lib.db.connection import get_connection
 
 class Author:
